@@ -5,6 +5,8 @@ if platform == 'ios'
   require 'motion/project/template/ios'
 elsif platform == 'osx'
   require 'motion/project/template/osx'
+elsif platform == 'android'
+  require 'motion/project/template/android'
 else
   raise "Unsupported platform #{ENV['platform']}"
 end
@@ -36,13 +38,21 @@ Motion::Project::App.setup do |app|
     app.device_family = [:iphone, :ipad]
   end
 
+  if platform == 'android'
+    app.api_version = '21'
+    app.resources_dirs = []
+  end
+
   if ENV['files']
     app.specs_dir = 'spec/'
   else
-    app.files.concat Dir.glob('spec/helpers/*.rb')
+
+    if platform == 'ios' or platform == 'osx'
+      app.files.concat Dir.glob('spec/helpers/*.rb')
+      app.spec_files.concat Dir.glob('spec/cocoa/*.rb')
+    end
 
     app.specs_dir = "spec/#{app.template}/"
-    app.spec_files.concat Dir.glob('spec/cocoa/*.rb')
     app.spec_files.concat Dir.glob('spec/all/*.rb')
   end
 end

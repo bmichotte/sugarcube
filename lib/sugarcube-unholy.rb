@@ -4,6 +4,7 @@ end
 
 
 require 'sugarcube'
+SugarCube.cocoa_only!('unholy')
 
 Motion::Project::App.pre_setup do |app|
   SugarCube.add_app_files(app, 'sugarcube-unholy')

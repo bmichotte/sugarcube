@@ -7,6 +7,3 @@ def SugarCube.look_in(where, here, here__deprecated={})
   end
   raise SugarCubeNotFoundException.new(where.inspect)
 end
-
-class SugarCubeNotFoundException < Exception
-end
